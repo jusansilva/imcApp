@@ -12,16 +12,18 @@ import {
   View,
   Text,
   TextInput,
+  Image,
   TouchableOpacity
 } from 'react-native';
 import { black } from 'color-name';
 import { tsConstructorType } from '@babel/types';
 
 
+
 export default class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { altura: 0, massa: 0, result: 0, textResposta: "", img:"" }
+    this.state = { altura: 0, massa: 0, result: 0, textResposta: "", img: " " }
     this.calcular = this.calcular.bind(this)
   }
   calcular() {
@@ -32,18 +34,25 @@ export default class App extends Component {
     nowState.result = imc;
 
     if (imc < 18.5) {
-      nowState.textResposta = "Abaixo do peso";
-    } else if (imc >= 18.5 && imc <=24.9) {
+      nowState.textResposta = "Abaixo do peso"; 
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/abh.jpeg")}/>
+    } else if (imc >= 18.5 && imc <= 24.9) {
       nowState.textResposta = "Peso normal";
-    } else if (imc >= 25 && imc <= 29,9) {
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/pnh.jpeg")}/>
+    } else if (imc >= 25 && imc <= 29, 9) {
       nowState.textResposta = "Sobrepeso";
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/sph.jpeg")}/>
     } else if (imc <= 30 && imc <= 34.9) {
       nowState.textResposta = "Obesidade grau 1";
-    } else if (imc <= 35 && imc <= 39,9) {
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/ob1h.jpeg")}/>
+    } else if (imc <= 35 && imc <= 39, 9) {
       nowState.textResposta = "Obesidade grau 2";
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/ob2h.jpeg")}/>
     } else {
       nowState.textResposta = "Obesidade grau 3";
+      nowState.img = <Image style={styles.image} source={require("./resorces/img/ob3h.jpeg")}/>
     }
+    console.log(this.state.img);
 
     this.setState(nowState);
 
@@ -61,7 +70,10 @@ export default class App extends Component {
           <TouchableOpacity style={styles.button} onPress={this.calcular.bind()}><Text style={styles.textButton}>Calcular</Text></TouchableOpacity>
           <Text style={styles.result}>{this.state.result.toFixed(2)}</Text>
           <Text style={[styles.result, { fontSize: 35 }]}>{this.state.textResposta}</Text>
-        </View>
+          {this.state.img !== " " && 
+          this.state.img}
+          
+          </View>
       </>
     );
   }
@@ -99,6 +111,13 @@ const styles = StyleSheet.create({
     color: '#5201cf',
     fontSize: 60,
     padding: 10,
+  }, 
+  image:{
+    alignSelf: 'center',
+    width: 250,
+    height: 250,
+    borderColor: '#000',
+    resizeMode:"contain",
   }
 
 });
