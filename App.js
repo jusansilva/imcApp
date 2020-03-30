@@ -19,36 +19,52 @@ import { tsConstructorType } from '@babel/types';
 
 
 export default class App extends Component {
-constructor(props){
-  super(props)
-  this.state = { altura: 0, massa: 0, result: 0, textResposta: ""}
-  this.calcular = this.calcular.bind(this)
-}
- calcular(){
-   let imc = this.state.massa / (this.state.altura * this.state.altura);
-   console.log(this.state.altura);
-   let nowState = this.state;
-   nowState.result = imc;
-   this.setState({nowState});
+  constructor(props) {
+    super(props)
+    this.state = { altura: 0, massa: 0, result: 0, textResposta: "", img:"" }
+    this.calcular = this.calcular.bind(this)
+  }
+  calcular() {
+    let peso = parseFloat(this.state.massa.toString().replace(",", "."));
+    let alturas = parseFloat(this.state.altura.toString().replace(",", ".")) * parseFloat(this.state.altura.toString().replace(",", "."));
+    let imc = peso / alturas;
+    let nowState = this.state;
+    nowState.result = imc;
 
- }
+    if (imc < 18.5) {
+      nowState.textResposta = "Abaixo do peso";
+    } else if (imc >= 18.5 && imc <=24.9) {
+      nowState.textResposta = "Peso normal";
+    } else if (imc >= 25 && imc <= 29,9) {
+      nowState.textResposta = "Sobrepeso";
+    } else if (imc <= 30 && imc <= 34.9) {
+      nowState.textResposta = "Obesidade grau 1";
+    } else if (imc <= 35 && imc <= 39,9) {
+      nowState.textResposta = "Obesidade grau 2";
+    } else {
+      nowState.textResposta = "Obesidade grau 3";
+    }
 
-render(){
+    this.setState(nowState);
 
-  return (
-    <>
-      <View style={styles.conteiner}>
-        <View style={styles.inputConteiner}>
-          <TextInput placeholder='Altura' keyboardType='numeric' style={styles.input}  onChangeText={(altura) => {this.setState({altura})}}/>
-          <TextInput placeholder='Massa' keyboardType='numeric' style={styles.input} onChangeText={(massa) => {this.setState({massa})}}/>
+  }
+
+  render() {
+
+    return (
+      <>
+        <View style={styles.conteiner}>
+          <View style={styles.inputConteiner}>
+            <TextInput placeholder='Altura' keyboardType='numeric' style={styles.input} onChangeText={(altura) => { this.setState({ altura }) }} />
+            <TextInput placeholder='Massa' keyboardType='numeric' style={styles.input} onChangeText={(massa) => { this.setState({ massa }) }} />
+          </View>
+          <TouchableOpacity style={styles.button} onPress={this.calcular.bind()}><Text style={styles.textButton}>Calcular</Text></TouchableOpacity>
+          <Text style={styles.result}>{this.state.result.toFixed(2)}</Text>
+          <Text style={[styles.result, { fontSize: 35 }]}>{this.state.textResposta}</Text>
         </View>
-        <TouchableOpacity style={styles.button} onPress={this.calcular}><Text style={styles.textButton}>Calcular</Text></TouchableOpacity>
-        <Text style={styles.result}>{this.state.result.toFixed(2)}</Text>
-        <Text style={[styles.result, { fontSize: 35 }]}>{this.state.textResposta}</Text>
-      </View>
-    </>
-  );
-}
+      </>
+    );
+  }
 
 };
 
