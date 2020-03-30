@@ -52,8 +52,6 @@ export default class App extends Component {
       nowState.textResposta = "Obesidade grau 3";
       nowState.img = <Image style={styles.image} source={require("./resorces/img/ob3h.jpeg")}/>
     }
-    console.log(this.state.img);
-
     this.setState(nowState);
 
   }
