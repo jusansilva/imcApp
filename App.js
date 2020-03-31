@@ -94,8 +94,8 @@ export default class App extends Component {
       <>
         <View style={styles.conteiner}>
           <View style={styles.inputConteiner}>
-            <TextInput placeholder='Altura' keyboardType='numeric' style={styles.input} onChangeText={(altura) => { this.setState({ altura }) }} />
-            <TextInput placeholder='Massa' keyboardType='numeric' style={styles.input} onChangeText={(massa) => { this.setState({ massa }) }} />
+            <TextInput placeholder='Altura' keyboardType='numeric' style={this.state.sexo === true ?styles.input:styles.inputf} onChangeText={(altura) => { this.setState({ altura }) }} />
+            <TextInput placeholder='Massa' keyboardType='numeric' style={this.state.sexo === true ?styles.input:styles.inputf} onChangeText={(massa) => { this.setState({ massa }) }} />
           </View>
           {this.state.sexo === true ?
           <TouchableOpacity style={styles.button} onPress={this.calcular.bind()}><Text style={styles.textButton}>Calcular</Text></TouchableOpacity>:
@@ -146,7 +146,15 @@ const styles = StyleSheet.create({
     width: '50%',
     fontSize: 50,
     marginTop: 60,
-    color: "#5201cf"
+    color: "#3399ff"
+  },
+  inputf: {
+    height: 80,
+    textAlign: 'center',
+    width: '50%',
+    fontSize: 50,
+    marginTop: 60,
+    color: "#ff94c2"
   },
   button: {
     backgroundColor: '#3399ff'
@@ -181,9 +189,11 @@ const styles = StyleSheet.create({
   },
   sexo: {
     alignSelf: 'center',
+    flexDirection:'row'
   }, 
   buttonView:{
     backgroundColor:'#5201cf',
+    marginTop:20,
   },
   buttonViewF:{
     backgroundColor:'#ff94c2',
