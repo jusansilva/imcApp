@@ -174,7 +174,7 @@ export default class App extends Component {
                         this.setState({ altura: 0, massa: 0, result: 0, textResposta: "", img: " "})
                     }
                 }
-            ><Text style={styles.textZerar}>Zerar dados</Text></TouchableOpacity>
+            ><Text style={styles.textZerar}>Limpar</Text></TouchableOpacity>
             </View>
             
             
